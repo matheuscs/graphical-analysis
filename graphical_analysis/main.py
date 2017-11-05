@@ -1,7 +1,7 @@
 
-from helpers.stocks import get_stocks_symbols, get_stocks_data
-from patterns_analysis.gap_analysis import analyse
+from graphical_analysis.candlesticks_analysis.gap_analysis import analyse
 from helpers.const import Interval
+from helpers.stocks import get_stocks_symbols, get_stocks_data
 
 intv = Interval()
 
