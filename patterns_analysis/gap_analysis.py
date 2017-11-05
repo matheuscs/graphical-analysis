@@ -11,20 +11,20 @@ def analyse(stocks_data):
     for k, df in stocks_data.items():
         result[k] = find_gaps(df)
 
-    for stock_symbol, gaps in result.items():
+    for stock_symbol, df in result.items():
         print('-------------------------')
         print(stock_symbol)
-        for gap in gaps:
+        highs1 = df.iloc[0::2]['High']
+        lows1 = df.iloc[0::2]['Low']
+        highs2 = df.iloc[1::2]['High']
+        lows2 = df.iloc[1::2]['Low']
+        for i in range(len(highs1)):
             print('-------------------------')
-            k1 = list(gap[0].keys())[0]
-            v1 = list(gap[0].values())[0]
-            k2 = list(gap[1].keys())[0]
-            v2 = list(gap[1].values())[0]
             gap_value = 0
-            if v2['Low'] > v1['High']:
-                gap_value = v2['Low'] - v1['High']
-            elif v2['High'] < v1['Low']:
-                gap_value = v2['High'] - v1['Low']
-            print(k1, v1, k2, v2, gap_value)
+            if lows2[i] > highs1[i]:
+                gap_value = lows2[i] - highs1[i]
+            elif highs2[i] < lows1[i]:
+                gap_value = highs2[i] - lows1[i]
+            print(gap_value)
 
     return result
