@@ -1,7 +1,9 @@
 
 def find_ifr(stocks_data, period=14):
+    labels = []
     ifr = []
     for k, df in stocks_data.items():
+        labels = [str(x)[:10] for x in df.index.values]
         closes = df['Close'].values.tolist()
         last_close = closes[0]
         total_gain = 0
@@ -36,4 +38,4 @@ def find_ifr(stocks_data, period=14):
                 average_loss = 0.000000000001
             fr = average_gain/average_loss
             ifr.append(100-(100/(1+fr)))
-    return ifr
+    return labels[period:], ifr
