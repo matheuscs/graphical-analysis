@@ -12,11 +12,12 @@ def get_stocks_symbols():
         return json.load(data_file)['symbols']
 
 
-def get_stocks_data(symbols, interval):
+def get_stocks_data(symbols, interval, period="1Y"):
     """
 
     :param symbols: stocks symbols
     :param interval: interval
+    :param period: period to be retrieved
     :return:
     """
     stocks_data = {}
@@ -24,6 +25,7 @@ def get_stocks_data(symbols, interval):
         param = {
             'q': s,
             'i': interval,
+            'p': period
         }
         stocks_data[s] = get_price_data(param)
 

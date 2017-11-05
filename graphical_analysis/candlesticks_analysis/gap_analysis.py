@@ -1,4 +1,4 @@
-from graphical_analysis.candlesticks import find_gaps
+from graphical_analysis.candlesticks.gap import find_gaps
 
 
 def analyse(stocks_data):
