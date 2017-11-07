@@ -24,4 +24,5 @@ def find_gaps(df):
         last_index = i
         last_row = r
 
-    return pd.DataFrame(gaps, index=gaps_indexes, columns=['Open', 'High', 'Low', 'Close', 'Volume'])
+    return pd.DataFrame(gaps, index=gaps_indexes,
+                        columns=['Open', 'High', 'Low', 'Close', 'Volume'])
