@@ -4,7 +4,7 @@ from graphical_analysis.candlesticks.gap import find_gaps
 def analyse_gap(stocks_data):
     """
 
-    :param stocks_data: dict; key: stock; value: stock DataFrame
+    :param stocks_data: {stock: stock DataFrame}
     :return: TBD - result of the analysis
     """
     result = {}

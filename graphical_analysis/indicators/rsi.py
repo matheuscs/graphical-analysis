@@ -1,6 +1,13 @@
 
-def find_ifr(df, period=14):
-    ifr = []
+def find_rsi(df, period=14):
+    """
+    Relative Strength Index
+
+    :param df: pandas dataframe to be analysed
+    :param period: period of the index measured
+    :return: rsi for the requested period
+    """
+    rsi = []
     labels = [str(x)[:10] for x in df.index.values]
     closes = df['Close'].values.tolist()
     last_close = closes[0]
@@ -18,7 +25,7 @@ def find_ifr(df, period=14):
     if average_loss == 0:
         average_loss = 0.000000000001
     fr = average_gain/average_loss
-    ifr.append(100-(100/(1+fr)))
+    rsi.append(100-(100/(1+fr)))
 
     for i in range(period+1, len(closes)):
         c = closes[i]
@@ -35,5 +42,5 @@ def find_ifr(df, period=14):
         if average_loss == 0:
             average_loss = 0.000000000001
         fr = average_gain/average_loss
-        ifr.append(100-(100/(1+fr)))
-    return labels[period:], ifr
+        rsi.append(100-(100/(1+fr)))
+    return labels[period:], rsi
