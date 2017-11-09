@@ -11,14 +11,14 @@ def get_body(row):
     return body, max_body, min_body
 
 
-def get_top_shadow(row):
+def get_upper_shadow(row):
     if row['Close'] > row['Open']:
         return row['High'] - row['Close']
     else:
         return row['High'] - row['Open']
 
 
-def get_bottom_shadow(row):
+def get_lower_shadow(row):
     if row['Close'] < row['Open']:
         return row['Close'] - row['Low']
     else:

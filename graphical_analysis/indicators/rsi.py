@@ -1,46 +1,35 @@
+import matplotlib.pyplot as plt
 
-def find_rsi(df, period=14):
+from graphics.indicators.rsi import find_rsi
+
+
+def analyse_rsi(stocks_data):
     """
-    Relative Strength Index
+    Layer of abstraction tha eventually will analyse a rsi
 
-    :param df: pandas dataframe to be analysed
-    :param period: period of the index measured
-    :return: rsi for the requested period
+    :param stocks_data: {stock: stock DataFrame}
     """
-    rsi = []
-    labels = [str(x)[:10] for x in df.index.values]
-    closes = df['Close'].values.tolist()
-    last_close = closes[0]
-    total_gain = 0
-    total_loss = 0
-    for c in closes[1:period+1]:
-        var = c - last_close
-        last_close = c
-        if var > 0:
-            total_gain += var
-        elif var < 0:
-            total_loss -= var
-    average_gain = total_gain/period
-    average_loss = total_loss/period
-    if average_loss == 0:
-        average_loss = 0.000000000001
-    fr = average_gain/average_loss
-    rsi.append(100-(100/(1+fr)))
+    result = {}
+    for k, df in stocks_data.items():
+        result[k] = find_rsi(df)
+    print(result['BBAS3'])
 
-    for i in range(period+1, len(closes)):
-        c = closes[i]
-        var = c - last_close
-        last_close = c
-        gain = 0
-        loss = 0
-        if var > 0:
-            gain = var
-        elif var < 0:
-            loss = var
-        average_gain = (average_gain * 13 + gain)/14
-        average_loss = (average_loss * 13 - loss)/14
-        if average_loss == 0:
-            average_loss = 0.000000000001
-        fr = average_gain/average_loss
-        rsi.append(100-(100/(1+fr)))
-    return labels[period:], rsi
+
+def plot_rsi(stocks_data, stock):
+    """
+    A visual way to inspect the rsi analysis
+
+    :param stock: a single stock symbol
+    :param stocks_data: {stock: stock DataFrame}
+    """
+    stock = stocks_data[stock]
+    closes = stock[['Close']]
+    plt.subplot(211)
+    plt.plot(closes)
+
+    labels, ifr = find_rsi(stock)
+    plt.subplot(212)
+    plt.plot(ifr)
+    # plt.xlabel(labels)
+
+    plt.show()

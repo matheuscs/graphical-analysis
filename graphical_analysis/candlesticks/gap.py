@@ -1,28 +1,30 @@
-import pandas as pd
+from graphics.patterns.gaps import find_gaps
 
 
-def find_gaps(df):
+def analyse_gap(stocks_data):
     """
 
-    :param df: pandas.DataFrame
-    :return: indexes of the days after the gap
+    :param stocks_data: {stock: stock DataFrame}
+    :return: TBD - result of the analysis
     """
-    gaps_indexes = []
-    gaps = []
-    last_index = None
-    last_row = None
-    for i, r in df.iterrows():
-        if last_index is None:
-            last_index = i
-            last_row = r
-            continue
-        if r['Low'] > last_row['High'] or r['High'] < last_row['Low']:
-            gaps_indexes.append(last_index)
-            gaps_indexes.append(i)
-            gaps.append(last_row)
-            gaps.append(r)
-        last_index = i
-        last_row = r
+    result = {}
+    for k, df in stocks_data.items():
+        result[k] = find_gaps(df)
 
-    return pd.DataFrame(gaps, index=gaps_indexes,
-                        columns=['Open', 'High', 'Low', 'Close', 'Volume'])
+    for stock_symbol, df in result.items():
+        print('-------------------------')
+        print(stock_symbol)
+        highs1 = df.iloc[0::2]['High']
+        lows1 = df.iloc[0::2]['Low']
+        highs2 = df.iloc[1::2]['High']
+        lows2 = df.iloc[1::2]['Low']
+        for i in range(len(highs1)):
+            print('-------------------------')
+            gap_value = 0
+            if lows2[i] > highs1[i]:
+                gap_value = lows2[i] - highs1[i]
+            elif highs2[i] < lows1[i]:
+                gap_value = highs2[i] - lows1[i]
+            print(gap_value)
+
+    return result

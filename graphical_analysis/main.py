@@ -1,5 +1,5 @@
 
-from graphical_analysis.indicators_analysis.rsi_analysis import plot_rsi
+from graphical_analysis.indicators.rsi import plot_rsi
 
 from helpers.const import Interval
 from helpers.stocks import get_stocks_symbols, get_stocks_data

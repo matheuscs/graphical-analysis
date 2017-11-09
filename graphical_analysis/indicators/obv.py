@@ -1,15 +1,30 @@
+import matplotlib.pyplot as plt
 
-def find_obv(df):
-    closes = df['Close'].values.tolist()
-    volumes = df['Volume'].values.tolist()
-    last_close = closes[0]
-    obv = [0]
-    cont = 0
-    for c in closes:
-        if c > last_close:
-            obv.append(obv[-1] + volumes[cont])
-        else:
-            obv.append(obv[-1] - volumes[cont])
-        last_close = c
-        cont += 1
-    return obv
+from graphics.indicators.obv import find_obv
+
+
+def analyse_obv(stocks_data):
+    """
+
+    :param stocks_data: dict; key: stock; value: stock DataFrame
+    :return: TBD - result of the analysis
+    """
+    result = {}
+    for k, df in stocks_data.items():
+        result[k] = find_obv(df)
+
+    # tbd
+
+
+def plot_obv(stocks_data, stock):
+    closes = stocks_data[stock][['Close']]
+    plt.subplot(211)
+    plt.plot(closes)
+
+    obv = find_obv(stocks_data[stock])
+    print(obv)
+    plt.subplot(212)
+    plt.plot(obv)
+    # plt.xlabel(labels)
+
+    plt.show()
