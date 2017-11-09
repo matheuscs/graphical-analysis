@@ -9,7 +9,7 @@ def get_stocks_symbols():
 
     :return: all stocks symbols
     """
-    with open(r'..\data\stocks.json') as data_file:
+    with open(r'.\data\stocks.json') as data_file:
         return json.load(data_file)['symbols']
 
 
