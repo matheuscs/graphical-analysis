@@ -7,7 +7,7 @@ def get_body(row):
     else:
         max_body = row['Open']
         min_body = row['Close']
-        body = min_body - max_body
+        body = max_body - min_body
     return body, max_body, min_body
 
 
