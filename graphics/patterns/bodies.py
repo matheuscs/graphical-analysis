@@ -1,7 +1,7 @@
 import pandas as pd
 
-from graphics.candlesticks.body import get_body, get_upper_shadow, \
-    get_lower_shadow
+from graphics.candlesticks.body import get_body
+from graphics.candlesticks.body import get_upper_shadow, get_lower_shadow
 
 
 def find_long_upper_shadows(df):
@@ -46,3 +46,15 @@ def find_long_lower_shadows(df):
 
     return pd.DataFrame(bodies, index=indexes,
                         columns=['Open', 'High', 'Low', 'Close', 'Volume'])
+
+
+def is_body_higher_than(r0, r1):
+    """
+
+    :param r0: first row to analyse
+    :param r1: second row to analyse
+    :return: true if min(r0.open, r0.close) > max(r1.open, r1.close)
+    """
+    body0, max_body0, min_body0 = get_body(r0)
+    body1, max_body1, min_body1 = get_body(r1)
+    return min_body0 > max_body1
