@@ -34,5 +34,6 @@ def analyse_hanging_mans(stocks_data):
             if is_body_higher_than(r1, r0) and is_body_higher_than(r1, r2):
                 result[k] = i
 
+    print('--- HANGING MAN ---')
     print(result)
 
