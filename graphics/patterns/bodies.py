@@ -62,3 +62,14 @@ def is_body_higher_than_or_equal_to(r0, r1):
     return min_body0 >= max_body1
 
 
+def does_body_engulf(r0, r1):
+    """
+    If the body r0 engulfs body r1
+
+    :param r0: first row to analyse
+    :param r1: second row to analyse
+    :return: body r0 engulfs body r1
+    """
+    body0, max_body0, min_body0 = get_body(r0)
+    body1, max_body1, min_body1 = get_body(r1)
+    return max_body0 > max_body1 and min_body0 > min_body1
