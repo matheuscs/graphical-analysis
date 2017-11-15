@@ -48,8 +48,10 @@ def find_long_lower_shadows(df):
                         columns=['Open', 'High', 'Low', 'Close', 'Volume'])
 
 
-def is_body_higher_than(r0, r1):
+def is_body_higher_than_or_equal_to(r0, r1):
     """
+    If the lower value of the body r0 is higher than the higher value of the
+    body r1
 
     :param r0: first row to analyse
     :param r1: second row to analyse
@@ -57,4 +59,6 @@ def is_body_higher_than(r0, r1):
     """
     body0, max_body0, min_body0 = get_body(r0)
     body1, max_body1, min_body1 = get_body(r1)
-    return min_body0 > max_body1
+    return min_body0 >= max_body1
+
+

@@ -1,5 +1,5 @@
 from graphics.patterns.bodies import find_long_lower_shadows
-from graphics.patterns.bodies import is_body_higher_than
+from graphics.patterns.bodies import is_body_higher_than_or_equal_to
 from helpers.dataframe import previous_row, next_row
 
 
@@ -31,7 +31,8 @@ def analyse_hammers(stocks_data):
             r1 = df.ix[i]
             r2 = next_row(df, i)
             # dowward movement and next cs higher
-            if is_body_higher_than(r0, r1) and is_body_higher_than(r2, r1):
+            if is_body_higher_than_or_equal_to(r0, r1) and \
+                    is_body_higher_than_or_equal_to(r2, r1):
                 result[k] = i
 
     print('--- HAMMER ---')
