@@ -1,30 +1,18 @@
-from graphics.patterns.gaps import find_gaps
+from graphics.patterns.candlesticks import candlestick_positioning, \
+    candlestick_diff_value
 
 
-def analyse_gap(stocks_data):
-    """
+def analyse_gaps(stocks_data):
+    gaps = []
+    for stock_symbol, df in stocks_data.items():
+        previous_row = df.ix[0]
+        for index in range(1, len(df)):
+            current_row = df.ix[index]
+            if abs(candlestick_positioning(previous_row, current_row)) == 5:
+                diff = candlestick_diff_value(previous_row, current_row)
+                gaps.append((df.index[index], diff))
+            previous_row = current_row
 
-    :param stocks_data: {stock: stock DataFrame}
-    :return: TBD - result of the analysis
-    """
-    result = {}
-    for k, df in stocks_data.items():
-        result[k] = find_gaps(df)
-
-    for stock_symbol, df in result.items():
-        print('-------------------------')
+        print('\n---GAP---')
         print(stock_symbol)
-        highs1 = df.iloc[0::2]['High']
-        lows1 = df.iloc[0::2]['Low']
-        highs2 = df.iloc[1::2]['High']
-        lows2 = df.iloc[1::2]['Low']
-        for i in range(len(highs1)):
-            print('-------------------------')
-            gap_value = 0
-            if lows2[i] > highs1[i]:
-                gap_value = lows2[i] - highs1[i]
-            elif highs2[i] < lows1[i]:
-                gap_value = highs2[i] - lows1[i]
-            print(gap_value)
-
-    return result
+        [print('Date: {}, Difference: {:.2f}'.format(g[0], g[1])) for g in gaps]

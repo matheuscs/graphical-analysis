@@ -1,6 +1,5 @@
-from graphics.patterns.bodies import find_long_lower_shadows
-from graphics.patterns.bodies import is_body_higher_than_or_equal_to
-from helpers.dataframe import previous_row, next_row
+from graphics.patterns.candlesticks import find_long_lower_shadows
+from graphics.patterns.candlesticks import candlestick_positioning
 
 
 def analyse_hammers(stocks_data):
@@ -23,17 +22,24 @@ def analyse_hammers(stocks_data):
         - Buy signal
     """
 
-    result = {}
-    for k, df in stocks_data.items():
-        df_hm = find_long_lower_shadows(df)
-        for i, r in df_hm.iterrows():
-            r0 = previous_row(df, i)
-            r1 = df.ix[i]
-            r2 = next_row(df, i)
-            # dowward movement and next cs higher
-            if is_body_higher_than_or_equal_to(r0, r1) and \
-                    is_body_higher_than_or_equal_to(r2, r1):
-                result[k] = i
+    hammers = []
+    for stock_symbol, df in stocks_data.items():
+        hammers_indexes = find_long_lower_shadows(df)
+        for index, df_index in hammers_indexes:
+            previous_row = df.ix[index-1]
+            current_row = df.ix[index]
+            next_row = df.ix[index+1]
 
-    print('--- HAMMER ---')
-    print(result)
+            significance = 0
+            pos = candlestick_positioning(previous_row, current_row)
+            if pos < -1:
+                significance += abs(pos)
+            pos = candlestick_positioning(current_row, next_row)
+            if pos > 1:
+                significance += pos
+
+            hammers.append((df_index, significance))
+
+        print('\n--- HAMMER ---')
+        print(stock_symbol)
+        [print('Date: {}, Significance: {}'.format(h[0], h[1])) for h in hammers]
