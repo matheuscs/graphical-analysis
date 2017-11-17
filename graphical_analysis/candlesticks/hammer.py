@@ -22,23 +22,25 @@ def analyse_hammers(stocks_data):
         - Buy signal
     """
 
-    hammers = []
     for stock_symbol, df in stocks_data.items():
+        hammers = []
         hammers_indexes = find_long_lower_shadows(df)
         for index, df_index in hammers_indexes:
             previous_row = df.ix[index-1]
             current_row = df.ix[index]
-            next_row = df.ix[index+1]
+            if index + 1 == len(df):
+                next_row = None
+            else:
+                next_row = df.ix[index+1]
 
             significance = 0
             pos = candlestick_positioning(previous_row, current_row)
-            if pos < -1:
-                significance += abs(pos)
+            significance -= pos
             pos = candlestick_positioning(current_row, next_row)
-            if pos > 1:
-                significance += pos
+            significance += pos
 
-            hammers.append((df_index, significance))
+            if significance >= 0:
+                hammers.append((df_index, significance))
 
         print('\n--- HAMMER ---')
         print(stock_symbol)

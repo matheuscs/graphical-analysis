@@ -47,7 +47,7 @@ def find_long_upper_shadows(df):
         body = _get_body_size(r)
         top_shadow = _get_upper_shadow_size(r)
         bottom_shadow = _get_lower_shadow_size(r)
-        if top_shadow > body * 2 and body > bottom_shadow * 4:
+        if top_shadow > body * 2 and body > bottom_shadow * 2:
             indexes.append(i)
 
     return indexes
@@ -66,7 +66,7 @@ def find_long_lower_shadows(df):
         body = _get_body_size(row)
         top_shadow = _get_upper_shadow_size(row)
         bottom_shadow = _get_lower_shadow_size(row)
-        if bottom_shadow > body * 2 and body > top_shadow * 4:
+        if bottom_shadow > body * 2 and body > top_shadow * 2:
             indexes.append((index, dfi))
         index += 1
 
