@@ -27,14 +27,11 @@ def analyse_bullish_engulfing(stocks_data):
             current_row = df.ix[i]
             for j in range(1, i):
                 previous_row = df.ix[i - j]
-                if not is_candlestick_positive(previous_row) and is_candlestick_positive(current_row):
-                    pos = candlestick_positioning(previous_row, current_row)
-                    if pos == 1:
-                        engulfeds += 1
-                    else:
-                        break
-                else:
+                if is_candlestick_positive(previous_row) or \
+                        not is_candlestick_positive(current_row) or \
+                        candlestick_positioning(previous_row, current_row) != 1:
                     break
+                engulfeds += 1
             if engulfeds > 0:
                 bullish_engulfs.append((df.index[i], engulfeds))
 
