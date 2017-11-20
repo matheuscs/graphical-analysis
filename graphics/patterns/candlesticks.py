@@ -1,38 +1,37 @@
 
 def _get_body_size(row):
-    if row['Close'] > row['Open']:
-        max_body = row['Close']
-        min_body = row['Open']
-        body = max_body - min_body
+    if is_candlestick_positive(row):
+        return row['Close'] - row['Open']
     else:
-        max_body = row['Open']
-        min_body = row['Close']
-        body = max_body - min_body
-    return body
+        return row['Open'] - row['Close']
 
 
 def _get_upper_shadow_size(row):
-    if row['Close'] > row['Open']:
+    if is_candlestick_positive(row):
         return row['High'] - row['Close']
     else:
         return row['High'] - row['Open']
 
 
 def _get_lower_shadow_size(row):
-    if row['Close'] < row['Open']:
-        return row['Close'] - row['Low']
-    else:
+    if is_candlestick_positive(row):
         return row['Open'] - row['Low']
+    else:
+        return row['Close'] - row['Low']
 
 
 def _get_candlestick_values(row):
-    if row['Close'] > row['Open']:
+    if is_candlestick_positive(row):
         max_body = row['Close']
         min_body = row['Open']
     else:
         max_body = row['Open']
         min_body = row['Close']
     return max_body, min_body, row['High'], row['Low']
+
+
+def is_candlestick_positive(row):
+    return row['Close'] > row['Open']
 
 
 def find_long_upper_shadows(df):
