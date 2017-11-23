@@ -1,4 +1,4 @@
-from stocks.my_db import read
+from stocks.my_db import read, delete_all, create
 from stocks.my_json import get_stocks_symbols
 from stocks.my_request import get_price_data
 
@@ -7,17 +7,18 @@ def read_stocks_data(symbols=get_stocks_symbols()):
     """
     Retrieve stock data from DB
 
-    :param period: period to be retrieved
     :param symbols: stocks symbols
     :return:
     """
     stocks_data = {}
     for symbol in symbols:
-        stocks_data[symbol] = read(symbol)
+        data = read(symbol)
+        if len(data):
+            stocks_data[symbol] = data
     return stocks_data
 
 
-def request_stocks_data(period, symbols):
+def request_stocks_data(period='2Y', symbols=get_stocks_symbols()):
     """
     Retrieve stock data from API
 
@@ -37,7 +38,11 @@ def request_stocks_data(period, symbols):
     return stocks_data
 
 
-def update_db_from_request(period='5Y',  symbols=get_stocks_symbols()):
-    print(request_stocks_data(period, symbols))
-
-
+def update_db_from_request(period='2Y', reset=False,
+                           symbols=get_stocks_symbols()):
+    if reset:
+        delete_all()
+    stocks_data = request_stocks_data(period, symbols)
+    for stock, df in stocks_data.items():
+        for index, row in df.iterrows():
+            create(stock, index, row[0], row[1], row[2], row[3], row[4])
