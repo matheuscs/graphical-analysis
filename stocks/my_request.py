@@ -4,7 +4,13 @@ import pandas as pd
 from datetime import datetime
 
 
-def get_price_data(query):
+def get_price_data(symbol, period):
+    query = {
+        'q': symbol,
+        'x': 'BVMF',
+        'i': 86400,
+        'p': period
+    }
     r = requests.get("https://finance.google.com/finance/getprices",
                      params=query)
     lines = r.text.splitlines()

@@ -3,16 +3,17 @@ from stocks.my_json import get_stocks_symbols
 from stocks.my_request import get_price_data
 
 
-def read_stocks_data(symbols=get_stocks_symbols()):
+def read_stocks_data(days_delta=9999, symbols=get_stocks_symbols()):
     """
     Retrieve stock data from DB
 
+    :param days_delta:
     :param symbols: stocks symbols
     :return:
     """
     stocks_data = {}
     for symbol in symbols:
-        data = read(symbol)
+        data = read(symbol, days_delta)
         if len(data):
             stocks_data[symbol] = data
     return stocks_data
@@ -28,19 +29,13 @@ def request_stocks_data(period='2Y', symbols=get_stocks_symbols()):
     """
     stocks_data = {}
     for s in symbols:
-        param = {
-            'q': s,
-            'x': 'BVMF',
-            'i': 86400,
-            'p': period
-        }
-        stocks_data[s] = get_price_data(param)
+        stocks_data[s] = get_price_data(s, period)
 
     return stocks_data
 
 
-def update_db_from_request(period='2Y', reset=False,
-                           symbols=get_stocks_symbols()):
+def update_db_from_request(period='2Y', symbols=get_stocks_symbols(),
+                           reset=False):
     if reset:
         delete_all()
     stocks_data = request_stocks_data(period, symbols)
