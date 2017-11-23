@@ -30,6 +30,7 @@ def request_stocks_data(period='2Y', symbols=get_stocks_symbols()):
     for s in symbols:
         param = {
             'q': s,
+            'x': 'BVMF',
             'i': 86400,
             'p': period
         }
