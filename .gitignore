@@ -1,3 +1,4 @@
 sandbox/
 .idea/
 __pycache__
+*.db
