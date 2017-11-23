@@ -19,27 +19,27 @@ def _get_significance(df, index):
     return significance
 
 
-def analyse_long_shadows(stocks_data):
+def analyse_long_shadows(stocks_data, min_significance=3):
     for stock_symbol, df in stocks_data.items():
         hammers = []
         hanging_men = []
         for index, df_index in find_long_lower_shadows(df):
             significance = _get_significance(df, index)
-            if significance < 0:
+            if significance < min_significance:
                 hammers.append((df_index, -significance))
-            if significance > 0:
+            if significance > min_significance:
                 hanging_men.append((df_index, significance))
 
         inverted_hammers = []
         shooting_stars = []
         for index, df_index in find_long_upper_shadows(df):
             significance = _get_significance(df, index)
-            if significance < 0:
+            if significance < min_significance:
                 inverted_hammers.append((df_index, -significance))
-            if significance > 0:
+            if significance > min_significance:
                 shooting_stars.append((df_index, significance))
 
-        if len(hammers) > 0:
+        if len(hammers) > min_significance:
             print('\n--- HAMMERS ---')
             print(stock_symbol)
             [print('Date: {}, Significance: {}'.format(h[0], h[1])) for h in hammers]
