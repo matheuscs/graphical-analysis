@@ -1,12 +1,15 @@
 import sqlite3
+import pandas as pd
+
+DB = './data/stocks.db'
 
 
-def _create_table():
-    conn = sqlite3.connect('stocks.db')
+def create_table():
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute("""
     CREATE TABLE stocks (
-            symbol VARCHAR(5) NOT NULL,
+            symbol VARCHAR(6) NOT NULL,
             date VARCHAR(10) NOT NULL,
             open NUMERIC NOT NULL,
             high NUMERIC NOT NULL,
@@ -19,15 +22,15 @@ def _create_table():
     conn.close()
 
 
-def _drop_table():
-    conn = sqlite3.connect('stocks.db')
+def drop_table():
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute('DROP TABLE stocks')
     conn.close()
 
 
-def _create(symbol, date, open_, high, low, close, volume):
-    conn = sqlite3.connect('stocks.db')
+def create(symbol, date, open_, high, low, close, volume):
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute("""
     INSERT OR IGNORE INTO stocks (symbol, date, open, high, low, close, volume)
@@ -37,19 +40,26 @@ def _create(symbol, date, open_, high, low, close, volume):
     conn.close()
 
 
-def _read():
-    conn = sqlite3.connect('stocks.db')
+def read(symbol):
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute("""
-    SELECT * FROM stocks;
-    """)
+    SELECT * FROM stocks
+    WHERE symbol=?
+    """, (symbol,))
+    index = []
+    data = []
     for row in cursor.fetchall():
-        print(row)
+        index.append(row[1])
+        data.append([row[2], row[3], row[4], row[5], row[6]])
     conn.close()
 
+    return pd.DataFrame(data, index=index,
+                        columns=['Open', 'High', 'Low', 'Close', 'Volume'])
 
-def _update(symbol, date, open_, high, low, close, volume):
-    conn = sqlite3.connect('stocks.db')
+
+def update(symbol, date, open_, high, low, close, volume):
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute("""
     UPDATE stocks
@@ -60,8 +70,8 @@ def _update(symbol, date, open_, high, low, close, volume):
     conn.close()
 
 
-def _delete(symbol, date):
-    conn = sqlite3.connect('stocks.db')
+def delete(symbol, date):
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute("""
     DELETE FROM stocks
@@ -71,8 +81,8 @@ def _delete(symbol, date):
     conn.close()
 
 
-def _delete_all():
-    conn = sqlite3.connect('stocks.db')
+def delete_all():
+    conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.execute('DELETE FROM stocks')
     conn.commit()
