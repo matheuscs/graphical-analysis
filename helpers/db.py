@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def create_table():
+def _create_table():
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute("""
@@ -19,14 +19,14 @@ def create_table():
     conn.close()
 
 
-def drop_table():
+def _drop_table():
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute('DROP TABLE stocks')
     conn.close()
 
 
-def create(symbol, date, open_, high, low, close, volume):
+def _create(symbol, date, open_, high, low, close, volume):
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute("""
@@ -37,7 +37,7 @@ def create(symbol, date, open_, high, low, close, volume):
     conn.close()
 
 
-def read():
+def _read():
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute("""
@@ -48,7 +48,7 @@ def read():
     conn.close()
 
 
-def update(symbol, date, open_, high, low, close, volume):
+def _update(symbol, date, open_, high, low, close, volume):
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute("""
@@ -60,7 +60,7 @@ def update(symbol, date, open_, high, low, close, volume):
     conn.close()
 
 
-def delete(symbol, date):
+def _delete(symbol, date):
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute("""
@@ -71,18 +71,9 @@ def delete(symbol, date):
     conn.close()
 
 
-def delete_all():
+def _delete_all():
     conn = sqlite3.connect('stocks.db')
     cursor = conn.cursor()
     cursor.execute('DELETE FROM stocks')
     conn.commit()
     conn.close()
-
-
-create('CRFB3', '2017-10-16', 16.19, 16.37, 15.72, 15.78, 1823800)
-create('CRFB3', '2017-10-17', 15.85, 15.99, 15.52, 15.57, 1353700)
-update('CRFB3', '2017-10-18', 15.85, 15.99, 15.52, 15.57, 1353701)
-# read()
-# delete('CRFB3', '2017-10-16')
-# delete_all()
-read()
