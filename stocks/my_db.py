@@ -40,6 +40,17 @@ def create(symbol, date, open_, high, low, close, volume):
     conn.close()
 
 
+def bulk_create(data):
+    conn = sqlite3.connect(DB)
+    cursor = conn.cursor()
+    cursor.executemany("""
+    INSERT OR IGNORE INTO stocks (symbol, date, open, high, low, close, volume)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, data)
+    conn.commit()
+    conn.close()
+
+
 def read(symbol):
     conn = sqlite3.connect(DB)
     cursor = conn.cursor()
