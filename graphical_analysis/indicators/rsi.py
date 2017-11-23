@@ -23,7 +23,7 @@ def plot_rsi(stocks_data, stock):
     :param stocks_data: {stock: stock DataFrame}
     """
     stock = stocks_data[stock]
-    closes = stock[['Close']]
+    closes = stock['Close'].values
     plt.subplot(211)
     plt.plot(closes)
 
