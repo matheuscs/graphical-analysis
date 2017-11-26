@@ -1,5 +1,5 @@
 from graphics.patterns.candlesticks import candlestick_positioning, \
-    candlestick_diff_value
+    candlestick_gap_value
 
 
 def analyse_gaps(stocks_data):
@@ -9,7 +9,7 @@ def analyse_gaps(stocks_data):
         for index in range(1, len(df)):
             current_row = df.ix[index]
             if abs(candlestick_positioning(previous_row, current_row)) == 5:
-                diff = candlestick_diff_value(previous_row, current_row)
+                diff = candlestick_gap_value(previous_row, current_row)
                 gaps.append((df.index[index], diff))
             previous_row = current_row
 

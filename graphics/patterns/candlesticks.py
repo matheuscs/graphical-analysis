@@ -126,7 +126,7 @@ def candlestick_positioning(row0, row1):
     return 0  # should never ever occur
 
 
-def candlestick_diff_value(row0, row1):
+def candlestick_gap_value(row0, row1):
     if row0 is None or row1 is None:
         return 0
 
