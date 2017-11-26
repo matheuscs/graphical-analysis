@@ -24,25 +24,7 @@ def create_table():
     conn.close()
 
 
-def drop_table():
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute('DROP TABLE stocks')
-    conn.close()
-
-
-def create(symbol, date_, open_, high, low, close, volume):
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("""
-    INSERT OR IGNORE INTO stocks (symbol, date, open, high, low, close, volume)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (symbol, date_, open_, high, low, close, volume))
-    conn.commit()
-    conn.close()
-
-
-def bulk_create(data):
+def bulk_insert(data):
     conn = sqlite3.connect(DB)
     cursor = conn.cursor()
     cursor.executemany("""
@@ -69,29 +51,6 @@ def read(symbol, days_delta=9999):
 
     return pd.DataFrame(data, index=index,
                         columns=['Open', 'High', 'Low', 'Close', 'Volume'])
-
-
-def update(symbol, date_, open_, high, low, close, volume):
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("""
-    UPDATE stocks
-    SET open=?, high=?, low=?, close=?, volume=?
-    WHERE symbol=? AND date=?
-    """, (open_, high, low, close, volume, symbol, date_))
-    conn.commit()
-    conn.close()
-
-
-def delete(symbol, date_):
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("""
-    DELETE FROM stocks
-    WHERE symbol=? AND date=?
-    """, (symbol, date_))
-    conn.commit()
-    conn.close()
 
 
 def delete_all():

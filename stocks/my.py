@@ -1,4 +1,4 @@
-from stocks.my_db import read, delete_all, bulk_create
+from stocks.my_db import read, delete_all, bulk_insert
 from stocks.my_json import get_stocks_symbols
 from stocks.my_request import get_price_data
 
@@ -43,4 +43,4 @@ def update_db_from_request(period='2Y', symbols=get_stocks_symbols(),
     for stock, df in stocks_data.items():
         for index, row in df.iterrows():
             data.append((stock, index, row[0], row[1], row[2], row[3], row[4]))
-    bulk_create(data)
+    bulk_insert(data)
