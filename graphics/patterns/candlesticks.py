@@ -76,8 +76,8 @@ def find_long_lower_shadows(df):
 def candlestick_positioning(row0, row1):
     """
 
-    :param row0:
-    :param row1:
+    :param row0: the oldest row
+    :param row1: the most recent row
     :return:
     0: if can't be determined
     1: body 0 engulfs body 1
@@ -139,3 +139,17 @@ def candlestick_gap_value(row0, row1):
         return min_shadow1 - max_shadow0
 
     return 0
+
+
+def candlestick_body_diff(row0, row1):
+    if row0 is None or row1 is None:
+        return 0
+
+    body0 = _get_body_size(row0)
+    body1 = _get_body_size(row1)
+
+    if body0 == 0 or body1 == 0:
+        return 0
+
+    return body1/body0
+
