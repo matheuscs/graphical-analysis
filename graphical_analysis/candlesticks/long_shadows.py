@@ -25,7 +25,7 @@ def analyse_long_shadows(stocks_data, min_significance=3):
         hanging_men = []
         for index, df_index in find_long_lower_shadows(df):
             significance = _get_significance(df, index)
-            if significance < min_significance:
+            if -significance > min_significance:
                 hammers.append((df_index, -significance))
             if significance > min_significance:
                 hanging_men.append((df_index, significance))
@@ -34,7 +34,7 @@ def analyse_long_shadows(stocks_data, min_significance=3):
         shooting_stars = []
         for index, df_index in find_long_upper_shadows(df):
             significance = _get_significance(df, index)
-            if significance < min_significance:
+            if -significance > min_significance:
                 inverted_hammers.append((df_index, -significance))
             if significance > min_significance:
                 shooting_stars.append((df_index, significance))
