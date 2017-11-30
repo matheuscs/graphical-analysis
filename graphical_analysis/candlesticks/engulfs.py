@@ -38,7 +38,7 @@ def analyse_engulfs(stocks_data):
             print(stock_symbol)
             [print('Date: {}, Engulfeds: {}'.format(e[0], e[1])) for e in bullishs_engulf]
 
-        if len(bullishs_engulf) > 0:
+        if len(bearishs_engulf) > 0:
             print('\n--- BEARISH ENGULFS ---')
             print(stock_symbol)
             [print('Date: {}, Engulfeds: {}'.format(e[0], e[1])) for e in bearishs_engulf]
