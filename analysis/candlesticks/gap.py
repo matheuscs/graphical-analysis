@@ -1,4 +1,4 @@
-from graphics.patterns.candlesticks import candlestick_positioning, \
+from modules.candlesticks import candlestick_positioning, \
     candlestick_gap_value
 
 

@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from graphics.indicators.obv import find_obv
+from modules.obv import find_obv
 
 
 def analyse_obv(stocks_data):

@@ -1,5 +1,5 @@
-from graphics.patterns.candlesticks import candlestick_positioning
-from graphics.patterns.candlesticks import is_candlestick_positive
+from modules.candlesticks import candlestick_positioning
+from modules.candlesticks import is_candlestick_positive
 
 
 def analyse_engulfs(stocks_data):

@@ -1,4 +1,4 @@
-from graphics.indicators.volume import get_total_money_volume
+from modules.volume import get_total_money_volume
 
 
 def analyse_volume(stocks_data, period=20):

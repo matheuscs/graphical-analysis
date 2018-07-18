@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from graphics.indicators.rsi import find_rsi
+from modules.rsi import find_rsi
 
 
 def analyse_rsi(stocks_data, oversold=25, overbought=85):

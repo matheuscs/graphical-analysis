@@ -1,6 +1,6 @@
-from graphics.patterns.candlesticks import find_long_lower_shadows
-from graphics.patterns.candlesticks import find_long_upper_shadows
-from graphics.patterns.candlesticks import candlestick_positioning
+from modules.candlesticks import candlestick_positioning
+from modules.candlesticks import find_long_lower_shadows
+from modules.candlesticks import find_long_upper_shadows
 
 
 def _get_significance(df, index):
