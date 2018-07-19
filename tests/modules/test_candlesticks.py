@@ -25,6 +25,8 @@ class TestCandlesticks(TestCase):
             index=index_30d,
             columns=['Open', 'High', 'Low', 'Close', 'Volume']
         )
+        print(f'str(cls.stock_data_30d): {str(cls.stock_data_30d)}')
+        print(f'dataframe_30d: {dataframe_30d}')
         assert str(cls.stock_data_30d) == dataframe_30d
 
     def test_long_upper_shadows(self):
