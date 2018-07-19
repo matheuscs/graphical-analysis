@@ -12,11 +12,11 @@ class TestCandlesticks(TestCase):
         """
         Preparing stock data with a valid mocked dataframe.
         """
-        with open(r'../data/mock_data_bbas3_30d.txt') as d:
+        with open(r'tests/data/mock_data_bbas3_30d.txt') as d:
             data_30d = ast.literal_eval(d.read())
-        with open(r'../data/mock_index_bbas3_30d.txt') as i:
+        with open(r'tests/data/mock_index_bbas3_30d.txt') as i:
             index_30d = ast.literal_eval(i.read())
-        with open(r'../data/mock_dataframe_bbas3_30d.txt') as df:
+        with open(r'tests/data/mock_dataframe_bbas3_30d.txt') as df:
             dataframe_30d = df.read()
         cls.stock_data_30d = pd.DataFrame(
             data_30d,
