@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 
-def get_price_data(symbol, period):
+def get_stock_data(symbol, period):
     query = {
         'q': symbol,
         'x': 'BVMF',

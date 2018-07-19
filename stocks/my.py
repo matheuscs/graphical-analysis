@@ -1,6 +1,6 @@
 from stocks.my_db import read, delete_all, bulk_insert
 from stocks.my_json import get_stocks_symbols
-from stocks.my_request import get_price_data
+from stocks.my_request import get_stock_data
 
 
 def read_stocks_data(days_delta=9999, symbols=get_stocks_symbols()):
@@ -29,7 +29,7 @@ def request_stocks_data(period='2Y', symbols=get_stocks_symbols()):
     """
     stocks_data = {}
     for s in symbols:
-        stocks_data[s] = get_price_data(s, period)
+        stocks_data[s] = get_stock_data(s, period)
 
     return stocks_data
 
