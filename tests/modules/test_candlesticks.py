@@ -1,6 +1,7 @@
 from unittest import TestCase
 import pandas as pd
 import ast
+import os
 
 import modules.candlesticks as cs
 
@@ -12,6 +13,7 @@ class TestCandlesticks(TestCase):
         """
         Preparing stock data with a valid mocked dataframe.
         """
+        print(f'os.getcwd(): {os.getcwd()}')
         with open(r'tests/data/mock_data_bbas3_30d.txt') as d:
             data_30d = ast.literal_eval(d.read())
         with open(r'tests/data/mock_index_bbas3_30d.txt') as i:
