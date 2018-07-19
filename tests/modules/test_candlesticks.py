@@ -13,21 +13,15 @@ class TestCandlesticks(TestCase):
         """
         Preparing stock data with a valid mocked dataframe.
         """
-        print(f'os.getcwd(): {os.getcwd()}')
         with open(r'tests/data/mock_data_bbas3_30d.txt') as d:
             data_30d = ast.literal_eval(d.read())
         with open(r'tests/data/mock_index_bbas3_30d.txt') as i:
             index_30d = ast.literal_eval(i.read())
-        with open(r'tests/data/mock_dataframe_bbas3_30d.txt') as df:
-            dataframe_30d = df.read()
         cls.stock_data_30d = pd.DataFrame(
             data_30d,
             index=index_30d,
             columns=['Open', 'High', 'Low', 'Close', 'Volume']
         )
-        print(f'str(cls.stock_data_30d): {str(cls.stock_data_30d)}')
-        print(f'dataframe_30d: {dataframe_30d}')
-        assert str(cls.stock_data_30d) == dataframe_30d
 
     def test_long_upper_shadows(self):
         self.assertListEqual(cs.find_long_upper_shadows(self.stock_data_30d),
