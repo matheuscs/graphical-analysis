@@ -1,4 +1,5 @@
 sandbox/
+venv/
 .idea/
 __pycache__
 *.db
